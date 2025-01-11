@@ -1,0 +1,73 @@
+html {
+  height: 100%;
+  display: flex;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.calc-container {
+  background-color: rgb(10, 10, 10);
+  border: solid 5px rgba(136, 136, 136, 0.267);
+  height: 290px; /* add a little extra height to calc */
+}
+
+.calc-row {
+  font-family: "Segoe UI", "Arial", sans-serif;
+  font-size: 20px;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  /* We want our rows to have a fixed width and height */
+  width: 178px;
+  height: 40px;
+  gap: 6px; 
+  padding: 3px 11px; 
+}
+
+.calc-row #display {
+  text-align: right;
+  font-size: 35px;
+  /* We want users to be able to input numbers bigger than
+  the display, but we want to maintain the size of our display */
+  white-space: nowrap;
+  overflow: hidden;
+  direction: rtl; /* direction specifies the text/writing direction with a block-level element */
+  text-overflow: clip;
+  margin-left: auto;
+}
+
+.calc-row button {
+  font-family: inherit;
+  font-size: inherit;
+  color: white;
+  text-align: center;
+  border: 0;
+  border-radius: 50%; /* makes round button */
+  /* our buttons have fixed width and height. Width and height should be
+  the same. The width is based on the width of the row: 
+  width of button*4 + width of gaps + width of left and right margin = width of row;  */
+  width: 40px;
+  height: 40px;
+}
+
+button.action-btn {
+  background-color: rgb(94, 94, 94);
+}
+
+button.math-btn {
+  background-color: orange;
+}
+
+button.num-btn {
+  background-color: rgb(39, 39, 39);
+}
