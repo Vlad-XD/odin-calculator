@@ -112,6 +112,25 @@ actionBtns.forEach((button) => {
     })
   } 
 
+  // negate button
+  if (button.id === "negate"){
+    button.addEventListener("click",() => {
+      // check current number isn't zero
+      if (displayText !== "0") {
+        // check if number is negative
+        if (displayText[0] === "-") {
+          // make positive (erase negative sign)
+          displayText = displayText.slice(1);
+          updateDisplay(display, displayText);
+        } else {
+          // otherwise, make number negative
+          displayText = "-".concat(displayText);
+          updateDisplay(display, displayText);
+        }
+      }
+    })
+  } 
+
 })
 
 /* 
@@ -168,8 +187,12 @@ function updateDisplay(display, displayText) {
 function backspaceDisplay(display) {
   // only do something if user has made any inputs
   if (displayText !== "0") {
+    // check for case where only one negative digit is left
+    if (displayText.length === 2 && displayText[0]==="-"){
+      displayText = "0"
+      updateDisplay(display, displayText);
     // check case where only one digit was input
-    if (displayText.length === 1) {
+    } else if (displayText.length === 1) {
       displayText = "0"
       updateDisplay(display, displayText);
     }
