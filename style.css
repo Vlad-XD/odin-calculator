@@ -25,6 +25,7 @@ body {
   display: flex;
   flex: none;
   align-items: center;
+  text-align: center;
   justify-content: center;
   color: white;
   /* We want our rows to have a fixed width and height */
@@ -58,6 +59,9 @@ body {
   width of button*4 + width of gaps + width of left and right margin = width of row;  */
   width: 40px;
   height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button.action-btn {

@@ -75,7 +75,7 @@ mathBtns.forEach((button) => {
 
         // display results
         displayText = firstNumber.toString();
-        updateDisplay(display, firstNumber);
+        updateDisplay(display, displayText);
   
         // update our global variables
         secondNumber = undefined;
