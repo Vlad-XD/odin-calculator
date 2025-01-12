@@ -1,8 +1,11 @@
 // variable initializations
+const ERROR_MESSAGE = "ERROR";
 let firstNumber = 0;
-let secondNumber = 0;
+// second number is undefined because we utilize this value to assess if second number has been input
+let secondNumber = undefined;
 let operator = "";
 let displayText = "0";
+let justCalculated = false; // keeps track if we have jsut calculated a value
 
 //  obtain initial display element
 let display = document.querySelector("#display");
@@ -15,6 +18,69 @@ numBtns.forEach((button) => {
   })
 })
 
+// add functionality of "math" (binary operator) buttons
+let mathBtns = document.querySelectorAll(".math-btn");
+mathBtns.forEach((button) => {
+  // for all binary operators
+  if (button.id !== "calculate") {
+    button.addEventListener("click", (e) => {
+      // check another operator button has not been pressed before
+      if (operator === "") {
+        // store our first number if we have not just calculated a value
+        firstNumber = justCalculated ? firstNumber : parseInt(displayText); 
+
+        // store clicked operator
+        operator = e.currentTarget.textContent;
+
+        // clear display text but do not update
+        displayText = "0";
+      }
+      else { //otherwise, just update the operator if second number has not been entered
+        if (secondNumber===undefined && !(display.textContent === displayText)) {
+        operator = e.currentTarget.textContent;
+        }
+      }
+    })
+  } else { // for "equals" button
+    button.addEventListener("click", (e) => {
+
+    // check if operator has been clicked
+    if (operator !== "") { 
+      // get second number from display
+      secondNumber = parseInt(displayText);
+
+      // calculate based on operator
+      firstNumber = operate(firstNumber, secondNumber, operator);
+      
+      //take into account case where user divides by 0
+      if (firstNumber === ERROR_MESSAGE) {
+        updateDisplay(display, firstNumber);
+        firstNumber = 0;
+        secondNumber = undefined;
+        operator = "";
+        displayText = "0";
+        justCalculated = false; 
+      } else {
+        firstNumber = Math.round(firstNumber); //rounding to avoid long decimals
+
+        // display results
+        displayText = firstNumber.toString();
+        updateDisplay(display, firstNumber);
+  
+        // update our global variables
+        secondNumber = undefined;
+        operator = "";
+        displayText = "0";
+        justCalculated = true; 
+        }
+      }
+    })
+  }
+})
+
+// add functionality of "action" buttons
+
+
 /* 
   addNumToDisplay: adds number to current display based on passed
                    number button.
@@ -23,10 +89,17 @@ numBtns.forEach((button) => {
 */
 function addNumToDisplay(display, numBtn) {
 
+  //update "just calculated" value
+  justCalculated = false;
+
   // take into account if input is 0
   if(numBtn.textContent === "0") {
     if (displayText !== "0") {
       displayText = displayText.concat(numBtn.textContent);
+      updateDisplay(display, displayText);
+    }
+    else {
+      // this case activates when an operator is pressed and then 0 is pressed
       updateDisplay(display, displayText);
     }
   } else {
@@ -72,6 +145,11 @@ function operate(num1, num2, operator) {
       return multiply(num1, num2);
       break;
     case "÷":
+      // take case of dividing by 0 into account
+      if (num2 === 0){
+        // return an error
+        return ERROR_MESSAGE;
+      }
       return divide(num1, num2);
       break;      
   }

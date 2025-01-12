@@ -41,7 +41,7 @@ body {
   the display, but we want to maintain the size of our display */
   white-space: nowrap;
   overflow: hidden;
-  direction: rtl; /* direction specifies the text/writing direction with a block-level element */
+  /* direction: rtl; direction specifies the text/writing direction with a block-level element */
   text-overflow: clip;
   margin-left: auto;
 }
