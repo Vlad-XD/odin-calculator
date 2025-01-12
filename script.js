@@ -2,12 +2,49 @@
 let firstNumber = 0;
 let secondNumber = 0;
 let operator = "";
-let displayText = "";
+let displayText = "0";
+
+//  obtain initial display element
+let display = document.querySelector("#display");
+
+// add functionality to number buttons
+let numBtns = document.querySelectorAll(".num-btn");
+numBtns.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    addNumToDisplay(display, e.currentTarget);
+  })
+})
+
+/* 
+  addNumToDisplay: adds number to current display based on passed
+                   number button.
+  Parameters: Element display, Element numBtn
+  Return value: N/A 
+*/
+function addNumToDisplay(display, numBtn) {
+
+  // take into account if input is 0
+  if(numBtn.textContent === "0") {
+    if (displayText !== "0") {
+      displayText = displayText.concat(numBtn.textContent);
+      updateDisplay(display, displayText);
+    }
+  } else {
+    // Take into account initial value of "0"
+    if (displayText === "0") {
+      displayText = numBtn.textContent;
+      updateDisplay(display, displayText);
+    } else {
+      displayText = displayText.concat(numBtn.textContent);
+      updateDisplay(display, displayText);
+    }
+  }
+}
 
 /* 
   updateDisplay: updates the text content of an element acting as our display 
                   with a passed string.
-  Parameters: Element display, Strind displayText
+  Parameters: Element display, String displayText
   Return value: N/A 
 */
 
