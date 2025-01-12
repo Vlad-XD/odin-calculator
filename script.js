@@ -13,9 +13,20 @@ let display = document.querySelector("#display");
 // add functionality to number buttons
 let numBtns = document.querySelectorAll(".num-btn");
 numBtns.forEach((button) => {
-  button.addEventListener("click", (e) => {
-    addNumToDisplay(display, e.currentTarget);
-  })
+  // for decimal button
+  if (button.id === "decimal-point") {
+    button.addEventListener("click", (e) => {
+      // check if we don't already have a decimal point
+      if (!(Array.from(displayText).includes("."))) {
+        addNumToDisplay(display, e.currentTarget);
+      }
+    })
+  } else {
+  // for every other button
+    button.addEventListener("click", (e) => {
+      addNumToDisplay(display, e.currentTarget);
+    })
+  }
 })
 
 // add functionality of "math" (binary operator) buttons
@@ -61,7 +72,6 @@ mathBtns.forEach((button) => {
         displayText = "0";
         justCalculated = false; 
       } else {
-        firstNumber = Math.round(firstNumber); //rounding to avoid long decimals
 
         // display results
         displayText = firstNumber.toString();
