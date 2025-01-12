@@ -5,7 +5,7 @@ let firstNumber = 0;
 let secondNumber = undefined;
 let operator = "";
 let displayText = "0";
-let justCalculated = false; // keeps track if we have jsut calculated a value
+let justCalculated = false; // keeps track if we have just calculated a value
 
 //  obtain initial display element
 let display = document.querySelector("#display");
@@ -79,7 +79,23 @@ mathBtns.forEach((button) => {
 })
 
 // add functionality of "action" buttons
+let actionBtns = document.querySelectorAll(".action-btn");
+actionBtns.forEach((button) => {
 
+  // clear button
+  if (button.id === "clear"){
+    button.addEventListener("click",() => {
+      // set all variables to inital state
+      firstNumber - 0;
+      secondNumber = undefined;
+      operator = "";
+      displayText = "0";
+      justCalculated = false; 
+      updateDisplay(display, displayText);
+    })
+  }
+
+})
 
 /* 
   addNumToDisplay: adds number to current display based on passed
