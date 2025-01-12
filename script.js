@@ -116,7 +116,11 @@ actionBtns.forEach((button) => {
   if (button.id === "negate"){
     button.addEventListener("click",() => {
       // check current number isn't zero
-      if (displayText !== "0") {
+      if (!(displayText === "0" && justCalculated === false)) {
+        // take into account case of just calculated number
+        if(justCalculated) {
+          displayText = firstNumber.toString();
+        }
         // check if number is negative
         if (displayText[0] === "-") {
           // make positive (erase negative sign)
@@ -130,6 +134,25 @@ actionBtns.forEach((button) => {
       }
     })
   } 
+
+  // percent button
+  if (button.id === "percent"){
+    button.addEventListener("click",() => {
+      // check current number isn't zero
+      if (!(displayText === "0" && justCalculated === false)) {
+        // take into account case of just calculated number
+        if(justCalculated) {
+          firstNumber = firstNumber / 100;
+          displayText = firstNumber.toString();
+          updateDisplay(display, displayText);
+        } else {
+          let newPercent = parseInt(displayText) / 100;
+          displayText = newPercent.toString();
+          updateDisplay(display, displayText);
+        }
+      }
+    })
+  }  
 
 })
 
@@ -157,9 +180,16 @@ function addNumToDisplay(display, numBtn) {
   } else {
     // Take into account initial value of "0"
     if (displayText === "0") {
-      displayText = numBtn.textContent;
-      updateDisplay(display, displayText);
-    } else {
+      // take case into account where we are at 0 and we press decimal point
+      if (numBtn.textContent === ".") {
+        displayText = displayText.concat(numBtn.textContent);
+        updateDisplay(display, displayText);
+      } else {
+        displayText = numBtn.textContent;
+        updateDisplay(display, displayText);
+      }
+    } 
+    else {
       displayText = displayText.concat(numBtn.textContent);
       updateDisplay(display, displayText);
     }
