@@ -105,6 +105,13 @@ actionBtns.forEach((button) => {
     })
   }
 
+  // backspace button
+  if (button.id === "backspace"){
+    button.addEventListener("click",() => {
+      backspaceDisplay(display);
+    })
+  } 
+
 })
 
 /* 
@@ -149,6 +156,29 @@ function addNumToDisplay(display, numBtn) {
 
 function updateDisplay(display, displayText) {
   display.textContent = displayText;
+}
+
+/* 
+  backspaceDisplay: helper function for backspace button. Removes last number
+                    pressed from current input on display and updates display.
+  Parameters: Element display
+  Return value: N/A 
+*/
+
+function backspaceDisplay(display) {
+  // only do something if user has made any inputs
+  if (displayText !== "0") {
+    // check case where only one digit was input
+    if (displayText.length === 1) {
+      displayText = "0"
+      updateDisplay(display, displayText);
+    }
+    else {
+    // otherwise, remove last character
+      displayText = displayText.substring(0,displayText.length - 1);
+      updateDisplay(display, displayText);
+    }
+  }
 }
 
 /*
