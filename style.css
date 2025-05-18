@@ -1,3 +1,13 @@
+:root {
+  /* used dvh because regular ch cause problems on mobile (iPhone)*/
+  --container-height: 80dvh;
+  --container-width: 40dvh;
+  /* --aspect-ratio: calc(210/290); */
+  --display-font-size: calc(var(--container-height)*0.15);
+  --button-diameter: max(2rem,10dvh);
+  --buttons-font-size: calc((var(--button-diameter))*0.5);
+}
+
 html {
   height: 100%;
   display: flex;
@@ -15,37 +25,52 @@ body {
 
 .calc-container {
   background-color: rgb(10, 10, 10);
-  border: solid 5px rgba(136, 136, 136, 0.267);
-  height: 290px; /* add a little extra height to calc */
+  border: solid 0.25rem rgba(136, 136, 136, 0.267);
+  height: var(--container-height);
+  min-height: fit-content;
+  max-height: var(--container-height);
+  width: var(--container-width);
+  max-width: var(--container-width);
+  min-width: 8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1dvh;
+  padding: 2dvh 2dvh;
 }
 
 .calc-row {
   font-family: "Segoe UI", "Arial", sans-serif;
-  font-size: 20px;
+  font-size: var(--buttons-font-size);
   display: flex;
   flex: none;
+  gap: 1dvh;
   align-items: center;
   text-align: center;
   justify-content: center;
   color: white;
-  /* We want our rows to have a fixed width and height */
-  width: 178px;
-  height: 40px;
-  gap: 6px; 
-  padding: 3px 11px; 
+}
+
+.calc-row.display {
+  margin-top: auto;
+  font-size: var(--display-font-size);
 }
 
 .calc-row #display {
   text-align: right;
-  font-size: 35px;
   /* We want users to be able to input numbers bigger than
   the display, but we want to maintain the size of our display */
   white-space: nowrap;
-  overflow: hidden;
+  overflow: scroll;
+  overflow-y: hidden;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.555) rgba(136, 136, 136, 0);
   /* direction: rtl; direction specifies the text/writing direction with a block-level element */
   text-overflow: clip;
   margin-left: auto;
 }
+
+
 
 .calc-row button {
   font-family: inherit;
@@ -53,14 +78,16 @@ body {
   color: white;
   border: 0;
   border-radius: 50%; /* makes round button */
-  /* our buttons have fixed width and height. Width and height should be
-  the same. The width is based on the width of the row: 
-  width of button*4 + width of gaps + width of left and right margin = width of row;  */
-  width: 40px;
-  height: 40px;
+  width: var(--button-diameter);
+  height: var(--button-diameter);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+.calc-row button:hover {
+  cursor: pointer;
+  /* filter: opacity(50%); */
 }
 
 button.action-btn {
@@ -74,3 +101,25 @@ button.math-btn {
 button.num-btn {
   background-color: rgb(39, 39, 39);
 }
+
+
+/* media query for mobile screen layouts */
+/* @media (max-width: 600px) {
+
+} */
+
+/* media query for devices with hovering capabilites */
+@media all and (hover: hover) {
+  button.action-btn:hover {
+    background-color: rgb(140, 140, 140);
+  }
+  
+  button.math-btn:hover {
+    background-color: rgb(253, 185, 58);
+  }
+  
+  button.num-btn:hover {
+    background-color: rgb(85, 85, 85);
+  }
+
+  }
